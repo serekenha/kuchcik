@@ -8,6 +8,7 @@ import { useTranslation } from '../../i18n/useTranslation';
 import { RECIPE_CATEGORIES } from '../../data/categories';
 import { decodeRecipe } from '../../utils/recipeCodec';
 import styles from './AddRecipe.module.css';
+import modalStyles from '../EditRecipe/EditRecipe.module.css';
 
 function ChevronIcon({ open }) {
   return (
@@ -66,6 +67,28 @@ export default function AddRecipe() {
   const [showImportModal, setShowImportModal] = useState(false);
   const [importCode, setImportCode] = useState('');
   const [importError, setImportError] = useState(false);
+  const [showUnsavedModal, setShowUnsavedModal] = useState(false);
+
+  // ── Dirty tracking ──
+  const initialSnapshotRef = useRef(null);
+  const currentSnapshot = JSON.stringify({
+    name, category, totalPrice, portions, photo,
+    ingredients: ingredients.map(i => ({ name: i.name, qty: i.qty })),
+    steps: steps.map(s => s.text),
+    youtubeUrl,
+  });
+  if (initialSnapshotRef.current === null) {
+    initialSnapshotRef.current = currentSnapshot;
+  }
+  const isDirty = currentSnapshot !== initialSnapshotRef.current;
+
+  function handleBack() {
+    if (isDirty) {
+      setShowUnsavedModal(true);
+    } else {
+      navigate(-1);
+    }
+  }
 
   function handleImport() {
     const recipe = decodeRecipe(importCode);
@@ -193,6 +216,7 @@ export default function AddRecipe() {
       <TopBar
         showBack
         title={t('addRecipe.title')}
+        onBack={handleBack}
         rightContent={
           <button
             onClick={() => setShowImportModal(true)}
@@ -443,6 +467,22 @@ export default function AddRecipe() {
       )}
 
       <BottomNav />
+
+      {/* ── Unsaved changes modal ── */}
+      {showUnsavedModal && (
+        <div className={modalStyles.modalOverlay}>
+          <div className={modalStyles.modal}>
+            <button className={modalStyles.modalCloseBtn} onClick={() => setShowUnsavedModal(false)}>
+              <span className="material-symbols-outlined" style={{ fontSize: 20 }}>close</span>
+            </button>
+            <p className={modalStyles.modalTitle}>{t('settings.unsavedTitle')}</p>
+            <p className={modalStyles.modalDesc}>Masz niezapisane zmiany. Czy chcesz je porzucić?</p>
+            <div className={modalStyles.modalActions}>
+              <button className={modalStyles.modalLeaveBtn} onClick={() => navigate(-1)}>Porzuć zmiany</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── Import modal ── */}
       {showImportModal && (
