@@ -1,10 +1,17 @@
 import { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import { sampleRecipes } from '../data/sampleRecipes';
 
+// IDs of the original sample recipes that were removed — strip them on load
+const OLD_SAMPLE_IDS = new Set([2, 3, 4, 5, 6, 7, 8, 9]);
+
 function loadRecipes() {
   try {
     const stored = localStorage.getItem('dishie_recipes');
-    return stored ? JSON.parse(stored) : sampleRecipes;
+    if (!stored) return sampleRecipes;
+    const parsed = JSON.parse(stored);
+    // One-time migration: remove old sample recipes
+    const migrated = parsed.filter(r => !OLD_SAMPLE_IDS.has(r.id));
+    return migrated.length > 0 ? migrated : sampleRecipes;
   } catch {
     return sampleRecipes;
   }
