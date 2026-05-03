@@ -56,6 +56,27 @@
   border-radius: 24px;
 }
 
+.photoRemoveBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(25, 31, 53, 0.55);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  z-index: 2;
+  transition: background 150ms ease;
+}
+.photoRemoveBtn:active {
+  background: rgba(25, 31, 53, 0.8);
+}
+
 .photoLabelWrap {
   display: flex;
   flex-direction: column;

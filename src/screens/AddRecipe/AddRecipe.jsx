@@ -218,7 +218,16 @@ export default function AddRecipe() {
           onClick={handlePhotoClick}
         >
           {photo ? (
-            <img src={photo} className={styles.photoThumb} alt="Zdjęcie przepisu" />
+            <>
+              <img src={photo} className={styles.photoThumb} alt="Zdjęcie przepisu" />
+              <button
+                className={styles.photoRemoveBtn}
+                onClick={e => { e.stopPropagation(); setPhoto(null); }}
+                aria-label="Usuń zdjęcie"
+              >
+                <span className="material-symbols-outlined" style={{ fontSize: 16 }}>close</span>
+              </button>
+            </>
           ) : (
             <>
               <span className="material-symbols-outlined" style={{ fontSize: 26, color: 'var(--text-muted)' }}>photo_camera</span>
