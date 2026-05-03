@@ -109,6 +109,10 @@ export function AppProvider({ children }) {
     setRecipes(prev => prev.map(r => r.id === updatedRecipe.id ? updatedRecipe : r));
   }, []);
 
+  const deleteRecipe = useCallback((recipeId) => {
+    setRecipes(prev => prev.filter(r => r.id !== recipeId));
+  }, []);
+
   return (
     <AppContext.Provider value={{
       recipes,
@@ -124,6 +128,7 @@ export function AppProvider({ children }) {
       removeShoppingItem,
       addRecipe,
       updateRecipe,
+      deleteRecipe,
       showToast,
       navGuardRef,
     }}>

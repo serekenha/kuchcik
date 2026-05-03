@@ -7,6 +7,7 @@ import { useApp } from '../../context/AppContext';
 import { useTranslation } from '../../i18n/useTranslation';
 import { RECIPE_CATEGORIES } from '../../data/categories';
 import styles from '../AddRecipe/AddRecipe.module.css';
+import modalStyles from './EditRecipe.module.css';
 
 function ChevronIcon({ open }) {
   return (
@@ -36,7 +37,7 @@ async function getCroppedImg(imageSrc, pixelCrop) {
 
 export default function EditRecipe() {
   const { id } = useParams();
-  const { recipes, updateRecipe, showToast } = useApp();
+  const { recipes, updateRecipe, deleteRecipe, showToast } = useApp();
   const { t } = useTranslation();
   const navigate = useNavigate();
 
@@ -80,6 +81,40 @@ export default function EditRecipe() {
     recipe?.youtubeId ? `https://youtube.com/watch?v=${recipe.youtubeId}` : ''
   );
 
+  // ── Unsaved changes tracking ──
+  const [showUnsavedModal, setShowUnsavedModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const initialSnapshotRef = useRef(null);
+  const currentSnapshot = JSON.stringify({
+    name, category, totalPrice, portions, photo,
+    ingredients: ingredients.map(i => ({ name: i.name, qty: i.qty })),
+    steps: steps.map(s => s.text),
+    youtubeUrl,
+  });
+  if (initialSnapshotRef.current === null) {
+    initialSnapshotRef.current = currentSnapshot;
+  }
+  const isDirty = currentSnapshot !== initialSnapshotRef.current;
+
+  function handleBack() {
+    if (isDirty) {
+      setShowUnsavedModal(true);
+    } else {
+      navigate(-1);
+    }
+  }
+
+  function handleUnsavedLeave() {
+    setShowUnsavedModal(false);
+    navigate(-1);
+  }
+
+  function handleUnsavedSave() {
+    setShowUnsavedModal(false);
+    handleSave();
+  }
+
   useEffect(() => {
     if (focusIngredient) {
       lastIngredientRef.current?.focus();
@@ -114,9 +149,7 @@ export default function EditRecipe() {
 
   const canSave = name.trim() && category && ingredients.some(i => i.name.trim()) && totalPrice && portions;
 
-  function handlePhotoClick() {
-    fileInputRef.current?.click();
-  }
+  function handlePhotoClick() { fileInputRef.current?.click(); }
 
   function handleFileChange(e) {
     const file = e.target.files?.[0];
@@ -131,9 +164,7 @@ export default function EditRecipe() {
     e.target.value = '';
   }
 
-  const onCropComplete = useCallback((_, pixels) => {
-    setCroppedAreaPixels(pixels);
-  }, []);
+  const onCropComplete = useCallback((_, pixels) => { setCroppedAreaPixels(pixels); }, []);
 
   async function handleCropConfirm() {
     const cropped = await getCroppedImg(rawPhoto, croppedAreaPixels);
@@ -141,9 +172,7 @@ export default function EditRecipe() {
     setRawPhoto(null);
   }
 
-  function handleCropCancel() {
-    setRawPhoto(null);
-  }
+  function handleCropCancel() { setRawPhoto(null); }
 
   function addIngredient() {
     setIngredients(prev => [...prev, { id: Date.now(), name: '', qty: '' }]);
@@ -199,23 +228,40 @@ export default function EditRecipe() {
     navigate(`/recipe/${recipe.id}`);
   }
 
+  function handleConfirmDelete() {
+    deleteRecipe(recipe.id);
+    navigate('/', { replace: true });
+  }
+
+  const iconBtnStyle = {
+    display: 'flex', alignItems: 'center', justifyContent: 'center',
+    width: 36, height: 36, flexShrink: 0,
+    background: 'none', border: '1.5px solid var(--border)',
+    borderRadius: 14, cursor: 'pointer', color: 'var(--navy)',
+    transition: 'background 150ms ease',
+  };
+
   return (
     <div className={styles.screen}>
-      <TopBar showBack title={t('editRecipe.title')} />
+      <TopBar
+        showBack
+        title={t('editRecipe.title')}
+        onBack={handleBack}
+        rightContent={
+          <button
+            style={{ ...iconBtnStyle, borderColor: 'rgba(220,38,38,0.3)', color: '#DC2626' }}
+            onClick={() => setShowDeleteModal(true)}
+            aria-label="Usuń przepis"
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: 20 }}>delete</span>
+          </button>
+        }
+      />
       <div className={styles.content}>
 
         {/* ── Photo zone ── */}
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          className={styles.hiddenInput}
-          onChange={handleFileChange}
-        />
-        <div
-          className={`${styles.photoZone} ${photo ? styles.hasPhoto : ''}`}
-          onClick={handlePhotoClick}
-        >
+        <input ref={fileInputRef} type="file" accept="image/*" className={styles.hiddenInput} onChange={handleFileChange} />
+        <div className={`${styles.photoZone} ${photo ? styles.hasPhoto : ''}`} onClick={handlePhotoClick}>
           {photo ? (
             <img src={photo} className={styles.photoThumb} alt="Zdjęcie przepisu" />
           ) : (
@@ -232,13 +278,7 @@ export default function EditRecipe() {
         {/* ── Dish name ── */}
         <div className={styles.section}>
           <div className={styles.sectionLabel}>{t('addRecipe.name')} <span className={styles.requiredDot} /></div>
-          <input
-            className={styles.input}
-            type="text"
-            placeholder={t('addRecipe.namePlaceholder')}
-            value={name}
-            onChange={e => setName(e.target.value)}
-          />
+          <input className={styles.input} type="text" placeholder={t('addRecipe.namePlaceholder')} value={name} onChange={e => setName(e.target.value)} />
         </div>
 
         {/* ── Category ── */}
@@ -246,11 +286,7 @@ export default function EditRecipe() {
           <div className={styles.sectionLabel}>{t('addRecipe.category')} <span className={styles.requiredDot} /></div>
           <div className={styles.categoryChips}>
             {RECIPE_CATEGORIES.map(cat => (
-              <button
-                key={cat.id}
-                className={`${styles.catChip} ${category === cat.id ? styles.catChipActive : ''}`}
-                onClick={() => setCategory(cat.id)}
-              >
+              <button key={cat.id} className={`${styles.catChip} ${category === cat.id ? styles.catChipActive : ''}`} onClick={() => setCategory(cat.id)}>
                 {cat.icon && <span className={styles.catChipIcon}>{cat.icon}</span>}
                 {cat.label}
               </button>
@@ -264,25 +300,11 @@ export default function EditRecipe() {
           <div className={styles.costRow}>
             <div className={styles.costField}>
               <div className={styles.fieldLabel}>{t('addRecipe.totalPrice')}</div>
-              <input
-                className={`${styles.input} ${styles.inputCenter}`}
-                type="number"
-                inputMode="decimal"
-                placeholder="0,00"
-                value={totalPrice}
-                onChange={e => setTotalPrice(e.target.value)}
-              />
+              <input className={`${styles.input} ${styles.inputCenter}`} type="number" inputMode="decimal" placeholder="0,00" value={totalPrice} onChange={e => setTotalPrice(e.target.value)} />
             </div>
             <div className={styles.costField}>
               <div className={styles.fieldLabel}>{t('addRecipe.portions')}</div>
-              <input
-                className={`${styles.input} ${styles.inputCenter}`}
-                type="number"
-                inputMode="numeric"
-                placeholder="0"
-                value={portions}
-                onChange={e => setPortions(e.target.value)}
-              />
+              <input className={`${styles.input} ${styles.inputCenter}`} type="number" inputMode="numeric" placeholder="0" value={portions} onChange={e => setPortions(e.target.value)} />
             </div>
           </div>
           <div className={styles.calcPill}>
@@ -304,30 +326,15 @@ export default function EditRecipe() {
           </div>
           {ingredients.map((ing, i) => (
             <div key={ing.id} className={styles.ingRow}>
-              <input
-                ref={i === ingredients.length - 1 ? lastIngredientRef : null}
-                className={`${styles.input} ${styles.ingName}`}
-                type="text"
-                placeholder="np. Makaron"
-                value={ing.name}
-                onChange={e => updateIngredient(ing.id, 'name', e.target.value)}
-              />
-              <input
-                className={`${styles.input} ${styles.ingQty}`}
-                type="text"
-                placeholder="400 g"
-                value={ing.qty}
-                onChange={e => updateIngredient(ing.id, 'qty', e.target.value)}
-              />
+              <input ref={i === ingredients.length - 1 ? lastIngredientRef : null} className={`${styles.input} ${styles.ingName}`} type="text" placeholder="np. Makaron" value={ing.name} onChange={e => updateIngredient(ing.id, 'name', e.target.value)} />
+              <input className={`${styles.input} ${styles.ingQty}`} type="text" placeholder="400 g" value={ing.qty} onChange={e => updateIngredient(ing.id, 'qty', e.target.value)} />
               <button className={styles.delBtn} onClick={() => removeIngredient(ing.id)}>
                 <span className="material-symbols-outlined" style={{ fontSize: 16 }}>remove</span>
               </button>
             </div>
           ))}
           <button className={styles.addRowBtn} onClick={addIngredient}>
-            <span className={styles.addRowIcon}>
-              <span className="material-symbols-outlined" style={{ fontSize: 14 }}>add</span>
-            </span>
+            <span className={styles.addRowIcon}><span className="material-symbols-outlined" style={{ fontSize: 14 }}>add</span></span>
             {t('addRecipe.addIngredient')}
           </button>
         </div>
@@ -347,23 +354,14 @@ export default function EditRecipe() {
               {steps.map((step, i) => (
                 <div key={step.id} className={styles.stepRow}>
                   <div className={styles.stepNum}>{i + 1}</div>
-                  <textarea
-                    ref={i === steps.length - 1 ? lastStepRef : null}
-                    className={`${styles.input} ${styles.stepTextarea}`}
-                    placeholder={`${t('addRecipe.stepPlaceholder')} ${i + 1}…`}
-                    value={step.text}
-                    onChange={e => updateStep(step.id, e.target.value)}
-                    rows={2}
-                  />
+                  <textarea ref={i === steps.length - 1 ? lastStepRef : null} className={`${styles.input} ${styles.stepTextarea}`} placeholder={`${t('addRecipe.stepPlaceholder')} ${i + 1}…`} value={step.text} onChange={e => updateStep(step.id, e.target.value)} rows={2} />
                   <button className={styles.delBtn} style={{ marginTop: 10 }} onClick={() => removeStep(step.id)}>
                     <span className="material-symbols-outlined" style={{ fontSize: 16 }}>remove</span>
                   </button>
                 </div>
               ))}
               <button className={styles.addRowBtn} onClick={addStep}>
-                <span className={styles.addRowIcon}>
-                  <span className="material-symbols-outlined" style={{ fontSize: 14 }}>add</span>
-                </span>
+                <span className={styles.addRowIcon}><span className="material-symbols-outlined" style={{ fontSize: 14 }}>add</span></span>
                 {t('addRecipe.addStep')}
               </button>
             </div>
@@ -381,24 +379,13 @@ export default function EditRecipe() {
             <ChevronIcon open={showYoutube} />
           </div>
           {showYoutube && (
-            <input
-              className={styles.input}
-              type="url"
-              placeholder="https://youtube.com/watch?v=…"
-              value={youtubeUrl}
-              onChange={e => setYoutubeUrl(e.target.value)}
-              style={{ marginTop: 10 }}
-            />
+            <input className={styles.input} type="url" placeholder="https://youtube.com/watch?v=…" value={youtubeUrl} onChange={e => setYoutubeUrl(e.target.value)} style={{ marginTop: 10 }} />
           )}
         </div>
 
         {/* ── Save button ── */}
         <div className={styles.saveWrap}>
-          <button
-            className={styles.saveBtn}
-            style={{ opacity: canSave ? 1 : 0.4 }}
-            onClick={handleSave}
-          >
+          <button className={styles.saveBtn} disabled={!canSave} onClick={handleSave}>
             <span className="material-symbols-outlined" style={{ fontSize: 18 }}>check</span>
             {t('editRecipe.save')}
           </button>
@@ -414,16 +401,7 @@ export default function EditRecipe() {
             <button className={styles.cropConfirmBtn} onClick={handleCropConfirm}>Gotowe</button>
           </div>
           <div className={styles.cropArea}>
-            <Cropper
-              image={rawPhoto}
-              crop={crop}
-              zoom={zoom}
-              aspect={4 / 3}
-              onCropChange={setCrop}
-              onZoomChange={setZoom}
-              onCropComplete={onCropComplete}
-              showGrid={false}
-            />
+            <Cropper image={rawPhoto} crop={crop} zoom={zoom} aspect={4 / 3} onCropChange={setCrop} onZoomChange={setZoom} onCropComplete={onCropComplete} showGrid={false} />
           </div>
           <div className={styles.cropHint}>
             <span className="material-symbols-outlined" style={{ fontSize: 16 }}>pinch</span>
@@ -433,6 +411,42 @@ export default function EditRecipe() {
       )}
 
       <BottomNav />
+
+      {/* ── Unsaved changes modal ── */}
+      {showUnsavedModal && (
+        <div className={modalStyles.modalOverlay}>
+          <div className={modalStyles.modal}>
+            <button className={modalStyles.modalCloseBtn} onClick={() => setShowUnsavedModal(false)}>
+              <span className="material-symbols-outlined" style={{ fontSize: 20 }}>close</span>
+            </button>
+            <p className={modalStyles.modalTitle}>{t('settings.unsavedTitle')}</p>
+            <p className={modalStyles.modalDesc}>Masz niezapisane zmiany. Czy chcesz je zapisać przed wyjściem?</p>
+            <div className={modalStyles.modalActions}>
+              <button className={modalStyles.modalSaveBtn} onClick={handleUnsavedSave}>{t('settings.saveAndLeave')}</button>
+              <button className={modalStyles.modalLeaveBtn} onClick={handleUnsavedLeave}>{t('settings.leaveWithout')}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Delete confirmation modal ── */}
+      {showDeleteModal && (
+        <div className={modalStyles.modalOverlay} onClick={() => setShowDeleteModal(false)}>
+          <div className={modalStyles.modal} onClick={e => e.stopPropagation()}>
+            <button className={modalStyles.modalCloseBtn} onClick={() => setShowDeleteModal(false)}>
+              <span className="material-symbols-outlined" style={{ fontSize: 20 }}>close</span>
+            </button>
+            <div className={modalStyles.modalIcon}>
+              <span className="material-symbols-outlined" style={{ fontSize: 28, color: '#DC2626' }}>delete</span>
+            </div>
+            <p className={modalStyles.modalTitle}>Usuń przepis</p>
+            <p className={modalStyles.modalDesc}>Czy na pewno chcesz usunąć „{recipe.name}"? Tej operacji nie można cofnąć.</p>
+            <div className={modalStyles.modalActions}>
+              <button className={modalStyles.modalDeleteBtn} onClick={handleConfirmDelete}>Usuń</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

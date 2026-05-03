@@ -333,3 +333,195 @@
   transform: scale(0.98);
   opacity: 0.85;
 }
+
+/* ── More options dropdown ──────────────────────────────── */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(25, 31, 53, 0.14);
+  overflow: hidden;
+  z-index: 100;
+  min-width: 180px;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px;
+  background: none;
+  border: none;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--navy);
+  cursor: pointer;
+  text-align: left;
+  transition: background 120ms ease;
+}
+.dropdownItem:not(:last-child) {
+  border-bottom: 1px solid var(--border);
+}
+.dropdownItem:active { background: var(--off-white); }
+
+/* ── Delete confirmation modal ──────────────────────────── */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(25, 31, 53, 0.50);
+  display: flex;
+  align-items: flex-end;
+  z-index: 200;
+}
+
+.modal {
+  width: 100%;
+  background: var(--white);
+  border-radius: 28px 28px 0 0;
+  padding: 28px 24px 40px;
+  position: relative;
+}
+
+.modalCloseBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--off-white);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: background 150ms ease;
+}
+.modalCloseBtn:active { background: var(--border); }
+
+.modalIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: #FEE2E2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.modalDesc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.modalActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modalDeleteBtn {
+  height: 52px;
+  background: #DC2626;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font);
+  color: white;
+  cursor: pointer;
+  width: 100%;
+  transition: opacity 150ms ease;
+}
+.modalDeleteBtn:active { opacity: 0.85; }
+
+.modalCancelBtn {
+  height: 44px;
+  background: none;
+  border: none;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--font);
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 100%;
+}
+
+/* ── Share modal ────────────────────────────────────────── */
+.shareIconWrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--off-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.shareCode {
+  width: 100%;
+  height: 96px;
+  background: var(--off-white);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  resize: none;
+  box-sizing: border-box;
+  outline: none;
+  word-break: break-all;
+  margin-bottom: 12px;
+  cursor: text;
+}
+
+.shareCopyBtn {
+  width: 100%;
+  height: 52px;
+  background: var(--navy);
+  color: white;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity 150ms ease;
+}
+.shareCopyBtn:active { opacity: 0.85; }
+
+.shareCopiedBtn {
+  width: 100%;
+  height: 52px;
+  background: #16A34A;
+  color: white;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: var(--font);
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 200ms ease;
+}

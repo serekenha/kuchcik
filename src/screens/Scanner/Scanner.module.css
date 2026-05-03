@@ -124,7 +124,7 @@
 }
 
 .scanBtn:disabled {
-  opacity: 0.35;
+  opacity: 0.15;
   cursor: default;
 }
 
@@ -308,7 +308,7 @@
 }
 
 .confirmBtn:disabled {
-  opacity: 0.4;
+  opacity: 0.15;
   cursor: default;
 }
 

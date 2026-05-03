@@ -146,16 +146,20 @@
   cursor: pointer;
   transition: opacity 150ms ease;
 }
-.saveBtn:active { opacity: 0.85; }
+.saveBtn:disabled {
+  opacity: 0.15;
+  cursor: default;
+}
+.saveBtn:not(:disabled):active { opacity: 0.85; }
 
 /* ── Unsaved changes modal ───────────────────────────── */
 .modalOverlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background: rgba(25, 31, 53, 0.50);
   display: flex;
   align-items: flex-end;
-  z-index: 100;
+  z-index: 200;
 }
 
 .modal {
@@ -163,7 +167,26 @@
   background: var(--white);
   border-radius: 28px 28px 0 0;
   padding: 28px 24px 40px;
+  position: relative;
 }
+
+.modalCloseBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--off-white);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: background 150ms ease;
+}
+.modalCloseBtn:active { background: var(--border); }
 
 .modalTitle {
   font-size: 18px;

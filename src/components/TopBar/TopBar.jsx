@@ -24,7 +24,7 @@ export default function TopBar({
   if (isHome) {
     return (
       <header className={styles.topbar}>
-        <img src="/dishie-logo-02.svg" alt="Dishie" className={styles.logo} />
+        <img src="/dishie-logo-02.svg" alt="kuchcik" className={styles.logo} />
       </header>
     );
   }

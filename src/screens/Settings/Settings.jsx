@@ -146,7 +146,7 @@ export default function Settings() {
         <div className={styles.saveWrap}>
           <button
             className={styles.saveBtn}
-            style={{ opacity: hasChanges ? 1 : 0.4 }}
+            disabled={!hasChanges}
             onClick={handleSave}
           >
             <span className="material-symbols-outlined" style={{ fontSize: 18 }}>check</span>
@@ -159,6 +159,9 @@ export default function Settings() {
       {showModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modal}>
+            <button className={styles.modalCloseBtn} onClick={handleCancel}>
+              <span className="material-symbols-outlined" style={{ fontSize: 20 }}>close</span>
+            </button>
             <h3 className={styles.modalTitle}>{t('settings.unsavedTitle')}</h3>
             <p className={styles.modalDesc}>{t('settings.unsavedDesc')}</p>
             <div className={styles.modalActions}>
@@ -167,9 +170,6 @@ export default function Settings() {
               </button>
               <button className={styles.modalLeaveBtn} onClick={handleLeaveWithout}>
                 {t('settings.leaveWithout')}
-              </button>
-              <button className={styles.modalCancelBtn} onClick={handleCancel}>
-                {t('settings.cancel')}
               </button>
             </div>
           </div>
