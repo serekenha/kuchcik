@@ -163,13 +163,24 @@ export default function RecipeList() {
           </button>
         </div>
 
-        <div className={styles.categoryScroll}>
-          {RECIPE_CATS.map(cat => (
-            <button key={cat.id} className={styles.categoryBox} aria-label={t('cat.' + cat.id)}>
-              <CategoryIcon category={cat.id} size={32} />
-              <span className={styles.categoryLabel}>{t('cat.' + cat.id)}</span>
-            </button>
-          ))}
+        <div className={styles.categoriesClip}>
+          <div className={styles.categoryScroll}>
+            {RECIPE_CATS.map(cat => (
+              <button
+                key={cat.id}
+                className={styles.categoryBox}
+                aria-label={t('cat.' + cat.id)}
+                onClick={() => {
+                  setNavDirection('forward');
+                  navigate('/przepisy', { state: { category: cat.id } });
+                }}
+              >
+                <CategoryIcon category={cat.id} size={32} />
+                <span className={styles.categoryLabel}>{t('cat.' + cat.id)}</span>
+              </button>
+            ))}
+            <div className={styles.categoryScrollSpacer} />
+          </div>
         </div>
 
       </div>

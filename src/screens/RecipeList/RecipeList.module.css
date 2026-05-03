@@ -257,15 +257,25 @@
 }
 
 /* ── Category scroll ────────────────────────────────────── */
+.categoriesClip {
+  overflow: hidden;
+  margin-left: 24px;
+}
+
 .categoryScroll {
   display: flex;
   gap: 12px;
-  padding: 0 24px 32px;
+  padding-bottom: 32px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 .categoryScroll::-webkit-scrollbar { display: none; }
+
+.categoryScrollSpacer {
+  flex-shrink: 0;
+  width: 24px;
+}
 
 .categoryBox {
   flex-shrink: 0;

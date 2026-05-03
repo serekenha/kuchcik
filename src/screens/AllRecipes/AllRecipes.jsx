@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import TopBar from '../../components/TopBar/TopBar';
 import BottomNav from '../../components/BottomNav/BottomNav';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
@@ -13,8 +13,9 @@ export default function AllRecipes() {
   const { recipes } = useApp();
   const { t, language } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
   const [search, setSearch] = useState('');
-  const [activeCategory, setActiveCategory] = useState('Wszystkie');
+  const [activeCategory, setActiveCategory] = useState(location.state?.category ?? 'Wszystkie');
 
   const filtered = recipes.filter(r => {
     const matchesCat = activeCategory === 'Wszystkie' || r.category === activeCategory;
