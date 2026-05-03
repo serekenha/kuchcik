@@ -268,23 +268,20 @@
 .addRowBtn {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 8px;
-  width: 100%;
-  padding: 14px 16px;
-  margin-top: 8px;
+  padding: 10px 0 2px;
   font-size: 14px;
   font-weight: 600;
   color: var(--navy);
-  background: var(--off-white);
-  border: 1.5px dashed var(--border);
-  border-radius: var(--radius-md);
+  background: none;
+  border: none;
   font-family: var(--font);
   cursor: pointer;
-  transition: background 150ms ease;
+  transition: opacity 150ms ease;
 }
 .addRowBtn:active {
-  background: #F0F0EC;
+  opacity: 0.6;
 }
 
 .addRowIcon {

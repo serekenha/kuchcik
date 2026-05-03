@@ -38,7 +38,8 @@ export const translations = {
     'addRecipe.pricePerPortion': 'Cena za porcję', 'addRecipe.ingredients': 'Składniki',
     'addRecipe.ingredientCol': 'Składnik', 'addRecipe.qtyCol': 'Ilość',
     'addRecipe.addIngredient': 'Dodaj składnik', 'addRecipe.steps': 'Kroki przepisu',
-    'addRecipe.addStep': 'Dodaj krok', 'addRecipe.youtube': 'Link do YouTube',
+    'addRecipe.addStep': 'Dodaj krok', 'addRecipe.stepPlaceholder': 'Krok',
+    'addRecipe.youtube': 'Link do YouTube',
 
     'editRecipe.title': 'Edytuj przepis', 'editRecipe.save': 'Zapisz zmiany',
     'editRecipe.photo': 'Zmień zdjęcie',
@@ -109,7 +110,8 @@ export const translations = {
     'addRecipe.pricePerPortion': 'Price per portion', 'addRecipe.ingredients': 'Ingredients',
     'addRecipe.ingredientCol': 'Ingredient', 'addRecipe.qtyCol': 'Quantity',
     'addRecipe.addIngredient': 'Add ingredient', 'addRecipe.steps': 'Recipe steps',
-    'addRecipe.addStep': 'Add step', 'addRecipe.youtube': 'YouTube link',
+    'addRecipe.addStep': 'Add step', 'addRecipe.stepPlaceholder': 'Step',
+    'addRecipe.youtube': 'YouTube link',
 
     'editRecipe.title': 'Edit recipe', 'editRecipe.save': 'Save changes',
     'editRecipe.photo': 'Change photo',

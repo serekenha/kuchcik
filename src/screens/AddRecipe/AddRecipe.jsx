@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cropper from 'react-easy-crop';
 import TopBar from '../../components/TopBar/TopBar';
@@ -49,6 +49,24 @@ export default function AddRecipe() {
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const fileInputRef = useRef(null);
+  const lastIngredientRef = useRef(null);
+  const lastStepRef = useRef(null);
+  const [focusIngredient, setFocusIngredient] = useState(false);
+  const [focusStep, setFocusStep] = useState(false);
+
+  useEffect(() => {
+    if (focusIngredient) {
+      lastIngredientRef.current?.focus();
+      setFocusIngredient(false);
+    }
+  }, [ingredients, focusIngredient]);
+
+  useEffect(() => {
+    if (focusStep) {
+      lastStepRef.current?.focus();
+      setFocusStep(false);
+    }
+  }, [steps, focusStep]);
 
   const [ingredients, setIngredients] = useState([
     { id: 1, name: '', qty: '' },
@@ -99,6 +117,7 @@ export default function AddRecipe() {
 
   function addIngredient() {
     setIngredients(prev => [...prev, { id: Date.now(), name: '', qty: '' }]);
+    setFocusIngredient(true);
   }
   function removeIngredient(id) {
     setIngredients(prev => prev.length > 1 ? prev.filter(i => i.id !== id) : prev);
@@ -109,6 +128,7 @@ export default function AddRecipe() {
 
   function addStep() {
     setSteps(prev => [...prev, { id: Date.now(), text: '' }]);
+    setFocusStep(true);
   }
   function removeStep(id) {
     setSteps(prev => prev.length > 1 ? prev.filter(s => s.id !== id) : prev);
@@ -252,9 +272,10 @@ export default function AddRecipe() {
             <span className={styles.ingColLabel} style={{ flex: 1 }}>{t('addRecipe.qtyCol')}</span>
             <span style={{ width: 38 }} />
           </div>
-          {ingredients.map(ing => (
+          {ingredients.map((ing, i) => (
             <div key={ing.id} className={styles.ingRow}>
               <input
+                ref={i === ingredients.length - 1 ? lastIngredientRef : null}
                 className={`${styles.input} ${styles.ingName}`}
                 type="text"
                 placeholder="np. Makaron"
@@ -297,8 +318,9 @@ export default function AddRecipe() {
                 <div key={step.id} className={styles.stepRow}>
                   <div className={styles.stepNum}>{i + 1}</div>
                   <textarea
+                    ref={i === steps.length - 1 ? lastStepRef : null}
                     className={`${styles.input} ${styles.stepTextarea}`}
-                    placeholder={`Step ${i + 1}…`}
+                    placeholder={`${t('addRecipe.stepPlaceholder')} ${i + 1}…`}
                     value={step.text}
                     onChange={e => updateStep(step.id, e.target.value)}
                     rows={2}
