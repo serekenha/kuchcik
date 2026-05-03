@@ -58,7 +58,7 @@
 .searchInput {
   width: 100%;
   height: 48px;
-  background: var(--off-white);
+  background: var(--white);
   border: 1.5px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 0 16px 0 42px;
@@ -67,11 +67,16 @@
   color: var(--navy);
   outline: none;
   box-sizing: border-box;
-  transition: border-color 150ms ease;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
 }
 
 .searchInput::placeholder { color: var(--text-muted); }
-.searchInput:focus { border-color: var(--yellow); }
+.searchInput:focus {
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(255, 225, 122, 0.25);
+}
 
 /* ── Empty state ─────────────────────────────────────────────── */
 .empty {

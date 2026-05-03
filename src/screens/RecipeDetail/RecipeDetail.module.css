@@ -210,15 +210,16 @@
   border: 1.5px solid var(--border);
   border-radius: var(--radius-md);
   font-size: 14px;
-  color: var(--text-primary);
+  color: var(--navy);
   background: var(--white);
   font-family: var(--font);
-  transition: border-color 150ms ease;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
 }
 
 .videoInput:focus {
   border-color: var(--yellow);
-  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 225, 122, 0.25);
 }
 
 .videoInput::placeholder {
