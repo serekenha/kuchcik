@@ -51,10 +51,7 @@ export default function RecipeDetail() {
     };
   }, [showMenu]);
 
-  const [youtubeInput, setYoutubeInput] = useState('');
-  const [youtubeEmbedUrl, setYoutubeEmbedUrl] = useState(
-    recipe?.youtubeId ? `https://www.youtube.com/embed/${recipe.youtubeId}` : ''
-  );
+  const youtubeEmbedUrl = recipe?.youtubeId ? `https://www.youtube.com/embed/${recipe.youtubeId}` : '';
   const [completedSteps, setCompletedSteps] = useState({});
 
   if (!recipe) {
@@ -80,16 +77,6 @@ export default function RecipeDetail() {
 
   const scaledTotalCost = recipe.totalCost * ratio;
   const scaledCostPerPortion = scaledTotalCost / portions;
-
-  function extractYoutubeId(url) {
-    const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/);
-    return match ? match[1] : null;
-  }
-
-  function handleAddVideo() {
-    const ytId = extractYoutubeId(youtubeInput);
-    if (ytId) setYoutubeEmbedUrl(`https://www.youtube.com/embed/${ytId}`);
-  }
 
   function toggleStep(i) {
     setCompletedSteps(prev => ({ ...prev, [i]: !prev[i] }));
@@ -234,22 +221,11 @@ export default function RecipeDetail() {
                   </div>
                 ) : (
                   <div className={styles.videoPlaceholder}>
-                    <span className="material-symbols-outlined" style={{ fontSize: 52, color: '#FF0000' }}>play_circle</span>
+                    <span className="material-symbols-outlined" style={{ fontSize: 52, color: 'var(--text-muted)' }}>play_circle</span>
                     <p className={styles.videoPlaceholderTitle}>{t('detail.noVideo')}</p>
                     <p className={styles.videoPlaceholderDesc}>{t('detail.noVideoDesc')}</p>
                   </div>
                 )}
-                <div className={styles.videoInputRow}>
-                  <input
-                    type="url"
-                    className={styles.videoInput}
-                    placeholder={t('detail.youtubePlaceholder')}
-                    value={youtubeInput}
-                    onChange={e => setYoutubeInput(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && handleAddVideo()}
-                  />
-                  <button className={styles.videoBtn} onClick={handleAddVideo}>{t('detail.add')}</button>
-                </div>
               </div>
             )}
 
