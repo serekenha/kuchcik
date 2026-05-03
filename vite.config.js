@@ -16,7 +16,7 @@ export default defineConfig({
         name: 'Kuchcik',
         short_name: 'Kuchcik',
         description: 'Zarządzaj przepisami kulinarnymi',
-        theme_color: '#1a1a2e',
+        theme_color: '#ffffff',
         background_color: '#F7F9F8',
         display: 'standalone',
         orientation: 'portrait',
