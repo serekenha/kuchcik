@@ -1,0 +1,260 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--white);
+  position: relative;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 100px;
+  scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.content::-webkit-scrollbar { display: none; }
+
+/* ── Header ──────────────────────────────────────────────────── */
+.header {
+  padding: 16px 24px 12px;
+  flex-shrink: 0;
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.count {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* ── Search bar ──────────────────────────────────────────────── */
+.searchWrap {
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  height: 48px;
+  background: var(--off-white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 0 16px 0 42px;
+  font-size: 14px;
+  font-family: var(--font);
+  color: var(--navy);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 150ms ease;
+}
+
+.searchInput::placeholder { color: var(--text-muted); }
+.searchInput:focus { border-color: var(--yellow); }
+
+/* ── Empty state ─────────────────────────────────────────────── */
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  padding-bottom: 100px;
+  text-align: center;
+}
+
+.emptyIcon {
+  width: 64px;
+  height: 64px;
+  background: var(--off-white);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.emptyTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.emptyDesc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  max-width: 220px;
+}
+
+/* ── List ────────────────────────────────────────────────────── */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 4px 24px 0;
+}
+
+/* ── Entry card ──────────────────────────────────────────────── */
+.entry {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+}
+
+.entryHead {
+  padding: 14px 16px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.entryName {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--font);
+  min-width: 0;
+}
+
+.entryActions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  color: var(--navy);
+  flex-shrink: 0;
+  transition: background 150ms ease;
+}
+
+.iconBtn:active {
+  opacity: 0.7;
+}
+
+/* ── Entry section ───────────────────────────────────────────── */
+.section {
+  padding-bottom: 12px;
+}
+
+.sectionLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 6px;
+  padding: 0 16px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 0 16px;
+}
+
+/* ── Alias chip ──────────────────────────────────────────────── */
+.aliasChip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--off-white);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+}
+
+.aliasText {
+  font-size: 11px;
+  color: var(--navy);
+  font-style: italic;
+}
+
+/* ── Price chip ──────────────────────────────────────────────── */
+.priceChip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(251, 226, 164, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 5px 10px;
+}
+
+.priceQty {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.priceArrow {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.priceVal {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.chipRemove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  padding: 0;
+  margin-left: 2px;
+  transition: color 150ms ease;
+}
+
+.chipRemove:active {
+  color: var(--navy);
+}
+
+.entryEmpty {
+  padding: 0 16px 14px;
+  font-size: 12px;
+  color: #BBBDCA;
+  font-style: italic;
+}

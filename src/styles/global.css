@@ -1,0 +1,86 @@
+:root {
+  /* Brand yellow (replaces green) */
+  --yellow: #FBE2A4;
+  --yellow-light: #FFF9E6;
+  --yellow-mid: #FFECAA;
+  --yellow-dark: #E8C840;
+
+  /* Neutrals */
+  --navy: #191F35;
+  --white: #FFFFFF;
+  --off-white: #F8F8F6;
+  --border: rgba(25, 31, 53, 0.10);
+  --text-primary: #191F35;
+  --text-secondary: #6B7280;
+  --text-muted: #9899A6;
+
+  /* Shadows */
+  --card-shadow: 0 2px 12px rgba(25, 31, 53, 0.07);
+  --card-shadow-hover: 0 8px 28px rgba(25, 31, 53, 0.13);
+
+  /* Layout */
+  --app-width: 390px;
+  --topbar-height: 56px;
+  --bottomnav-height: 80px; /* includes pill + spacing */
+
+  /* Font */
+  --font: 'Poppins', system-ui, -apple-system, sans-serif;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-pill: 28px;
+  --radius-card: 0 20px 0 20px; /* asymmetric from design */
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font);
+  background: #EEECEA;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none;
+}
+
+button {
+  font-family: var(--font);
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+input {
+  font-family: var(--font);
+  outline: none;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+* {
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,94 @@
+:root {
+  /* Brand colors */
+  --color-coral: #FF6B6B;
+  --color-teal: #4ECDC4;
+  --color-yellow: #FFE66D;
+  --color-lavender: #C9B8FF;
+  --color-blush: #FFB8C6;
+
+  /* Neutrals */
+  --color-off-white: #F7F7F5;
+  --color-navy: #1A1A2E;
+  --color-text-primary: #1A1A2E;
+  --color-text-secondary: #888888;
+  --color-text-muted: #AAAAAA;
+  --color-white: #FFFFFF;
+
+  /* Category colors */
+  --cat-obiad-bg: #FFEDED;
+  --cat-obiad-text: #CC4444;
+  --cat-zupa-bg: #E8FAFA;
+  --cat-zupa-text: #2A9D8F;
+  --cat-makaron-bg: #F3F0FF;
+  --cat-makaron-text: #6B4FBB;
+  --cat-deser-bg: #FFF0F4;
+  --cat-deser-text: #C0547A;
+  --cat-sniadanie-bg: #FFF8E1;
+  --cat-sniadanie-text: #9A7200;
+  --cat-kolacja-bg: #F0F4FF;
+  --cat-kolacja-text: #3B5BDB;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 20px;
+  --radius-dmark: 18px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.06);
+  --shadow-nav: 0 -1px 0 #F0F0F0;
+
+  /* Layout */
+  --app-width: 412px;
+  --topbar-height: 64px;
+  --bottomnav-height: 72px;
+
+  /* Typography */
+  --font-logo: 'Mochiy Pop One', sans-serif;
+  --font-ui: 'Poppins', sans-serif;
+
+  /* Transitions */
+  --transition-fast: 150ms ease-out;
+  --transition-mid: 250ms ease-out;
+  --transition-slide: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-ui);
+  background-color: #E8E8E8;
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+button {
+  font-family: var(--font-ui);
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+input {
+  font-family: var(--font-ui);
+}

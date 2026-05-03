@@ -1,0 +1,298 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--white);
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 5px;
+  padding-bottom: 100px;
+  scrollbar-width: none;
+}
+.scroll::-webkit-scrollbar { display: none; }
+
+/* ── Hero: greeting + clipped illustration ──────────────── */
+.hero {
+  position: relative;
+}
+
+/* ── Illustration — decorative, inside .hero, scrolls with content ── */
+.illustration {
+  position: absolute;
+  top: -5px;
+  right: -60px;
+  height: 250px;
+  width: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Greeting ───────────────────────────────────────────── */
+.greeting {
+  padding: 23px 24px 16px;
+  position: relative;
+  z-index: 1;
+}
+
+.greetingTitle {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.05;
+  margin-bottom: 8px;
+}
+
+.greetingSubtitle {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* ── Search ─────────────────────────────────────────────── */
+.searchWrap {
+  position: relative;
+  margin: 16px 24px 28px;
+  z-index: 10;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  height: 48px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 0 40px 0 42px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--navy);
+  outline: none;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: border-color 150ms ease;
+}
+.searchInput::placeholder { color: var(--text-muted); }
+.searchInput:focus {
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(255, 225, 122, 0.25);
+}
+
+.clearBtn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Search dropdown ─────────────────────────────────────── */
+.dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(25, 31, 53, 0.14);
+  overflow: hidden;
+  z-index: 20;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+.dropdownItem:last-child { border-bottom: none; }
+.dropdownItem:active { background: var(--off-white); }
+
+.dropdownName {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--navy);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdownCategory {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.dropdownEmpty {
+  padding: 18px 16px;
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ── Section headers ────────────────────────────────────── */
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  margin-bottom: 14px;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ── Shuffle button ─────────────────────────────────────── */
+.shuffleBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--yellow);
+  border: none;
+  border-radius: 20px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--navy);
+  cursor: pointer;
+  transition: opacity 150ms ease, transform 100ms ease;
+}
+.shuffleBtn:active { transform: scale(0.95); opacity: 0.85; }
+
+/* ── See all button ─────────────────────────────────────── */
+.seeAllBtn {
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color 150ms ease;
+}
+.seeAllBtn:hover { color: var(--navy); }
+
+/* ── Featured card ──────────────────────────────────────── */
+.featuredCard {
+  margin: 0 24px 28px;
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: 0 2px 20px rgba(25, 31, 53, 0.09);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 100ms ease, opacity 150ms ease;
+}
+.featuredCard:active { transform: scale(0.985); opacity: 0.92; }
+
+.featuredImg {
+  width: 100%;
+  height: 200px;
+  background: #EEEFF2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.featuredBody {
+  padding: 14px 16px 16px;
+}
+
+.featuredName {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.3;
+  margin: 0 0 10px;
+}
+
+.featuredMeta {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* ── Category scroll ────────────────────────────────────── */
+.categoryScroll {
+  display: flex;
+  gap: 12px;
+  padding: 0 24px 32px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.categoryScroll::-webkit-scrollbar { display: none; }
+
+.categoryBox {
+  flex-shrink: 0;
+  width: 132px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+.categoryBox:hover {
+  background: var(--off-white);
+  border-color: rgba(25, 31, 53, 0.2);
+}
+.categoryBox:active { transform: scale(0.96); }
+
+.categoryLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--navy);
+  text-align: center;
+  line-height: 1.2;
+}

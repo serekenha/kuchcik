@@ -1,0 +1,28 @@
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy);
+  flex: 1;
+  min-width: 0;
+}
+
+.amount {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--navy);
+  white-space: nowrap;
+  flex-shrink: 0;
+}

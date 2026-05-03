@@ -1,0 +1,293 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--white);
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 16px 24px 120px;
+  scrollbar-width: none;
+}
+
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+.notFound {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+/* ── Photo zone ──────────────────────────────────────────── */
+.photoZone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 220px;
+  flex-shrink: 0;
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius-xl);
+  background: var(--off-white);
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+
+.photoZone:active {
+  opacity: 0.8;
+}
+
+.hasPhoto {
+  border-color: var(--navy);
+  border-style: solid;
+  background: rgba(25, 31, 53, 0.04);
+}
+
+.photoLabel {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── Section ─────────────────────────────────────────────── */
+.section {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.section:last-of-type {
+  border-bottom: none;
+}
+
+.sectionLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.requiredDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--yellow);
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.optionalBadge {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1px 7px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ── Input ───────────────────────────────────────────────── */
+.input {
+  width: 100%;
+  height: 46px;
+  background: var(--off-white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0 14px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--navy);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 150ms ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.input:focus {
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(255, 225, 122, 0.25);
+}
+
+.inputCenter {
+  text-align: center;
+}
+
+/* ── Cost row ────────────────────────────────────────────── */
+.costRow {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.costField {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* ── Calc pill ───────────────────────────────────────────── */
+.calcPill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--yellow-light);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+}
+
+.calcLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+.calcValue {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+}
+
+/* ── Ingredients ─────────────────────────────────────────── */
+.ingHeader {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+  padding: 0 2px;
+}
+
+.ingColLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.ingRow {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.ingName {
+  flex: 2;
+}
+
+.ingQty {
+  flex: 1;
+}
+
+.delBtn {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--off-white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 150ms, color 150ms;
+}
+
+.delBtn:hover {
+  background: #FEE2E2;
+  border-color: #FCA5A5;
+  color: #DC2626;
+}
+
+.addRowBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: none;
+  border: 1.5px dashed var(--border);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 100%;
+  margin-top: 4px;
+  transition: border-color 150ms, color 150ms;
+}
+
+.addRowBtn:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.addRowIcon {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--off-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Save button ─────────────────────────────────────────── */
+.saveWrap {
+  padding-top: 16px;
+}
+
+.saveBtn {
+  width: 100%;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--navy);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  font-size: 15px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: opacity 150ms ease, transform 100ms ease;
+}
+
+.saveBtn:active {
+  transform: scale(0.98);
+  opacity: 0.9;
+}

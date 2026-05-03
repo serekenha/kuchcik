@@ -1,0 +1,223 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--white);
+  position: relative;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 24px 100px;
+  scrollbar-width: none;
+}
+.content::-webkit-scrollbar { display: none; }
+
+/* ── Sections ────────────────────────────────────────── */
+.section {
+  margin-bottom: 28px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 10px;
+}
+
+/* ── Name input ──────────────────────────────────────── */
+.input {
+  width: 100%;
+  height: 52px;
+  background: var(--off-white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 0 16px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--navy);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.input:focus {
+  border-color: var(--yellow);
+  box-shadow: 0 0 0 3px rgba(251, 226, 164, 0.30);
+}
+.input::placeholder { color: var(--text-muted); }
+
+/* ── Theme toggle ────────────────────────────────────── */
+.toggleRow {
+  display: flex;
+  gap: 10px;
+}
+
+.toggleBtn {
+  flex: 1;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--off-white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--navy);
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+.toggleBtn:active { transform: scale(0.97); }
+
+.toggleActive {
+  background: var(--yellow);
+  border-color: var(--yellow);
+  font-weight: 600;
+}
+
+/* ── Language radio ──────────────────────────────────── */
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  background: var(--off-white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: border-color 150ms ease;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy);
+}
+
+.radioInput {
+  display: none;
+}
+
+.radioCustom {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  position: relative;
+  transition: border-color 150ms ease;
+}
+
+.radioLabel:has(.radioInput:checked) {
+  border-color: var(--yellow);
+}
+
+.radioLabel:has(.radioInput:checked) .radioCustom {
+  border-color: var(--navy);
+  border-width: 6px;
+}
+
+/* ── Save button ─────────────────────────────────────── */
+.saveWrap {
+  padding-top: 4px;
+}
+
+.saveBtn {
+  width: 100%;
+  height: 56px;
+  background: var(--navy);
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+.saveBtn:active { opacity: 0.85; }
+
+/* ── Unsaved changes modal ───────────────────────────── */
+.modalOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(25, 31, 53, 0.50);
+  display: flex;
+  align-items: flex-end;
+  z-index: 100;
+}
+
+.modal {
+  width: 100%;
+  background: var(--white);
+  border-radius: 28px 28px 0 0;
+  padding: 28px 24px 40px;
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.modalDesc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.modalActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.modalSaveBtn {
+  height: 52px;
+  background: var(--navy);
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  color: white;
+  cursor: pointer;
+  width: 100%;
+}
+.modalSaveBtn:active { opacity: 0.85; }
+
+.modalLeaveBtn {
+  height: 52px;
+  background: var(--off-white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--navy);
+  cursor: pointer;
+  width: 100%;
+}
+
+.modalCancelBtn {
+  height: 44px;
+  background: none;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-muted);
+  cursor: pointer;
+  width: 100%;
+}

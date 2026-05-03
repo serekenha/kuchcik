@@ -1,0 +1,117 @@
+.topbar {
+  height: 64px;
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  flex-shrink: 0;
+  gap: 12px;
+  position: relative;
+  z-index: 10;
+}
+
+/* ── Home: logo ───────────────────────────────────────────── */
+.logo {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  max-width: 140px;
+}
+
+/* ── Home: theme toggle pill ─────────────────────────────── */
+.themePill {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 3px;
+  flex-shrink: 0;
+}
+
+.themeBtn {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease, transform 120ms ease;
+  border: none;
+  background: none;
+}
+
+.themeBtn:hover {
+  background: var(--off-white);
+  color: var(--navy);
+}
+
+.themeBtn:active {
+  transform: scale(0.90);
+}
+
+.themeBtnActive {
+  background: var(--yellow);
+  color: var(--navy);
+}
+
+.themeBtnActive:hover {
+  background: var(--yellow);
+}
+
+/* ── Non-home: left group ────────────────────────────────── */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* Back button */
+.backBtn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  border: 1.5px solid var(--border);
+  color: var(--navy);
+  background: none;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.backBtn:hover {
+  background: var(--off-white);
+  border-color: rgba(25, 31, 53, 0.2);
+}
+
+.backBtn:active {
+  transform: scale(0.92);
+}
+
+/* Page title — big, matches "Słownik" heading size */
+.pageTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Right optional content (e.g. count) */
+.rightContent {
+  font-size: 13px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}

@@ -1,0 +1,63 @@
+/* ── App frame: real app shell filling the viewport ── */
+.app-frame {
+  position: fixed;
+  inset: 0;
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Screen content area ── */
+.screen-content {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Animated screen wrapper ── */
+.screen-anim-wrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes enterFromRight {
+  from { opacity: 0.6; transform: translateX(100%); }
+  to   { opacity: 1;   transform: translateX(0); }
+}
+
+@keyframes enterFromLeft {
+  from { opacity: 0.6; transform: translateX(-100%); }
+  to   { opacity: 1;   transform: translateX(0); }
+}
+
+.screen-anim-wrapper.enter-from-right {
+  animation: enterFromRight 280ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.screen-anim-wrapper.enter-from-left {
+  animation: enterFromLeft 280ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen-anim-wrapper.enter-from-right,
+  .screen-anim-wrapper.enter-from-left {
+    animation: none;
+  }
+}
+
+/* ── Dark mode ───────────────────────────────────────── */
+.app-frame.dark {
+  --navy: #E8EAF0;
+  --white: #1A1D27;
+  --off-white: #22263A;
+  --border: rgba(232, 234, 240, 0.12);
+  --text-primary: #E8EAF0;
+  --text-secondary: #9899A6;
+  --text-muted: #6B7280;
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.40);
+  --card-shadow-hover: 0 8px 28px rgba(0, 0, 0, 0.55);
+  --yellow-light: #2A2410;
+}
