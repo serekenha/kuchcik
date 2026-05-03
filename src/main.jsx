@@ -12,13 +12,6 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-function removeSplash() {
-  const splash = document.getElementById('splash');
-  if (!splash) return;
-  splash.classList.add('out');
-  setTimeout(() => splash.remove(), 260);
-}
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
@@ -28,6 +21,3 @@ createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </StrictMode>
 );
-
-// Fade out splash once React has painted
-requestAnimationFrame(() => requestAnimationFrame(removeSplash));
