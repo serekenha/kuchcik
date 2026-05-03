@@ -14,6 +14,8 @@ export default defineConfig({
       devOptions: { enabled: true },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,woff2}'],
+        skipWaiting: true,
+        clientsClaim: true,
       },
       manifest: {
         name: 'Kuchcik',
