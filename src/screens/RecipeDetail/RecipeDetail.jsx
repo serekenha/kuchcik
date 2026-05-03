@@ -7,7 +7,7 @@ import IngredientRow from '../../components/IngredientRow/IngredientRow';
 import PortionSlider from '../../components/PortionSlider/PortionSlider';
 import { useApp } from '../../context/AppContext';
 import { useTranslation } from '../../i18n/useTranslation';
-import { getCategoryStyle, sampleSteps } from '../../data/sampleRecipes';
+import { getCategoryStyle } from '../../data/sampleRecipes';
 import { getRecipeName } from '../../i18n/translations';
 import styles from './RecipeDetail.module.css';
 
@@ -212,24 +212,30 @@ export default function RecipeDetail() {
             {/* ── Steps tab ── */}
             {activeTab === 'steps' && (
               <div className={styles.steps}>
-                {sampleSteps.map((step, i) => (
-                  <div
-                    key={i}
-                    className={styles.stepRow}
-                    onClick={() => toggleStep(i)}
-                  >
-                    <div className={`${styles.stepNum} ${completedSteps[i] ? styles.stepNumDone : ''}`}>
-                      {completedSteps[i] ? (
-                        <span className="material-symbols-outlined" style={{ fontSize: 14, color: 'var(--navy)' }}>check</span>
-                      ) : (
-                        <span>{i + 1}</span>
-                      )}
+                {recipe.steps && recipe.steps.length > 0 ? (
+                  recipe.steps.map((step, i) => (
+                    <div
+                      key={i}
+                      className={styles.stepRow}
+                      onClick={() => toggleStep(i)}
+                    >
+                      <div className={`${styles.stepNum} ${completedSteps[i] ? styles.stepNumDone : ''}`}>
+                        {completedSteps[i] ? (
+                          <span className="material-symbols-outlined" style={{ fontSize: 14, color: 'var(--navy)' }}>check</span>
+                        ) : (
+                          <span>{i + 1}</span>
+                        )}
+                      </div>
+                      <p className={`${styles.stepText} ${completedSteps[i] ? styles.stepTextDone : ''}`}>
+                        {step}
+                      </p>
                     </div>
-                    <p className={`${styles.stepText} ${completedSteps[i] ? styles.stepTextDone : ''}`}>
-                      {step}
-                    </p>
-                  </div>
-                ))}
+                  ))
+                ) : (
+                  <p className={styles.videoPlaceholderDesc} style={{ textAlign: 'center', padding: '32px 0' }}>
+                    Brak kroków przepisu
+                  </p>
+                )}
               </div>
             )}
           </div>
