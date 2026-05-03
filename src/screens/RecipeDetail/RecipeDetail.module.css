@@ -198,6 +198,24 @@
   max-width: 240px;
 }
 
+.videoEditBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  padding: 9px 16px;
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  font-family: var(--font);
+  color: var(--navy);
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.videoEditBtn:active { background: var(--off-white); }
+
 .videoInputRow {
   display: flex;
   gap: 10px;
