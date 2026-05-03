@@ -244,13 +244,22 @@ export default function AddRecipe() {
           {photo ? (
             <>
               <img src={photo} className={styles.photoThumb} alt="Zdjęcie przepisu" />
-              <button
-                className={styles.photoRemoveBtn}
-                onClick={e => { e.stopPropagation(); setPhoto(null); }}
-                aria-label="Usuń zdjęcie"
-              >
-                <span className="material-symbols-outlined" style={{ fontSize: 16 }}>close</span>
-              </button>
+              <div className={styles.photoActions}>
+                <button
+                  className={styles.photoActionBtn}
+                  onClick={e => { e.stopPropagation(); setRawPhoto(photo); setCrop({ x: 0, y: 0 }); setZoom(1); }}
+                  aria-label="Przytnij zdjęcie"
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: 16 }}>crop</span>
+                </button>
+                <button
+                  className={styles.photoActionBtn}
+                  onClick={e => { e.stopPropagation(); setPhoto(null); }}
+                  aria-label="Usuń zdjęcie"
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: 16 }}>close</span>
+                </button>
+              </div>
             </>
           ) : (
             <>
