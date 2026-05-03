@@ -38,7 +38,10 @@ export default function RecipeCard({ recipe, animIndex = 0 }) {
       aria-label={displayName}
     >
       <div className={styles.photo}>
-        <span className="material-symbols-outlined" style={{ fontSize: 40, color: '#C0C7D0' }}>photo_camera</span>
+        {recipe.photo
+          ? <img src={recipe.photo} alt={displayName} className={styles.photoImg} />
+          : <span className="material-symbols-outlined" style={{ fontSize: 40, color: '#C0C7D0' }}>photo_camera</span>
+        }
       </div>
 
       <div className={styles.body}>

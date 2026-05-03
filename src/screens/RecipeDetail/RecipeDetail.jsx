@@ -93,10 +93,13 @@ export default function RecipeDetail() {
       />
 
       <main className={styles.content} ref={contentRef}>
-        {/* Hero photo placeholder */}
+        {/* Hero photo */}
         <div className={styles.heroWrap}>
           <div className={styles.hero}>
-            <span className="material-symbols-outlined" style={{ fontSize: 40, color: '#C0C7D0' }}>photo_camera</span>
+            {recipe.photo
+              ? <img src={recipe.photo} alt={recipe.name} className={styles.heroImg} />
+              : <span className="material-symbols-outlined" style={{ fontSize: 40, color: '#C0C7D0' }}>photo_camera</span>
+            }
           </div>
         </div>
 

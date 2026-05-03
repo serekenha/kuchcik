@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cropper from 'react-easy-crop';
 import TopBar from '../../components/TopBar/TopBar';
 import BottomNav from '../../components/BottomNav/BottomNav';
 import { useApp } from '../../context/AppContext';
@@ -18,6 +19,21 @@ function ChevronIcon({ open }) {
   );
 }
 
+async function getCroppedImg(imageSrc, pixelCrop) {
+  const image = await new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = imageSrc;
+  });
+  const canvas = document.createElement('canvas');
+  canvas.width = pixelCrop.width;
+  canvas.height = pixelCrop.height;
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(image, pixelCrop.x, pixelCrop.y, pixelCrop.width, pixelCrop.height, 0, 0, pixelCrop.width, pixelCrop.height);
+  return canvas.toDataURL('image/jpeg', 0.85);
+}
+
 export default function AddRecipe() {
   const { addRecipe, showToast } = useApp();
   const { t } = useTranslation();
@@ -27,10 +43,15 @@ export default function AddRecipe() {
   const [category, setCategory] = useState('');
   const [totalPrice, setTotalPrice] = useState('');
   const [portions, setPortions] = useState('');
-  const [hasPhoto, setHasPhoto] = useState(false);
+  const [photo, setPhoto] = useState(null);
+  const [rawPhoto, setRawPhoto] = useState(null);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const fileInputRef = useRef(null);
+
   const [ingredients, setIngredients] = useState([
     { id: 1, name: '', qty: '' },
-    { id: 2, name: '', qty: '' },
   ]);
   const [showSteps, setShowSteps] = useState(false);
   const [steps, setSteps] = useState([{ id: 1, text: '' }]);
@@ -43,7 +64,38 @@ export default function AddRecipe() {
     return !isNaN(tp) && !isNaN(p) && p > 0 ? (tp / p).toFixed(2) : null;
   })();
 
-  const canSave = name.trim() && ingredients.some(i => i.name.trim()) && totalPrice && portions;
+  const canSave = name.trim() && category && ingredients.some(i => i.name.trim()) && totalPrice && portions;
+
+  function handlePhotoClick() {
+    fileInputRef.current?.click();
+  }
+
+  function handleFileChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      setRawPhoto(ev.target.result);
+      setCrop({ x: 0, y: 0 });
+      setZoom(1);
+    };
+    reader.readAsDataURL(file);
+    e.target.value = '';
+  }
+
+  const onCropComplete = useCallback((_, pixels) => {
+    setCroppedAreaPixels(pixels);
+  }, []);
+
+  async function handleCropConfirm() {
+    const cropped = await getCroppedImg(rawPhoto, croppedAreaPixels);
+    setPhoto(cropped);
+    setRawPhoto(null);
+  }
+
+  function handleCropCancel() {
+    setRawPhoto(null);
+  }
 
   function addIngredient() {
     setIngredients(prev => [...prev, { id: Date.now(), name: '', qty: '' }]);
@@ -70,7 +122,8 @@ export default function AddRecipe() {
     const recipe = {
       id: Date.now(),
       name: name.trim(),
-      category: category || 'Przekąska',
+      category,
+      photo: photo || null,
       portions: parseFloat(portions),
       totalCost: parseFloat(totalPrice),
       costPerPortion: parseFloat(pricePerPortion),
@@ -102,17 +155,28 @@ export default function AddRecipe() {
       <div className={styles.content}>
 
         {/* ── Photo zone ── */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className={styles.hiddenInput}
+          onChange={handleFileChange}
+        />
         <div
-          className={`${styles.photoZone} ${hasPhoto ? styles.hasPhoto : ''}`}
-          onClick={() => setHasPhoto(p => !p)}
+          className={`${styles.photoZone} ${photo ? styles.hasPhoto : ''}`}
+          onClick={handlePhotoClick}
         >
-          <span className="material-symbols-outlined" style={{ fontSize: 26, color: hasPhoto ? 'var(--navy)' : 'var(--text-muted)' }}>photo_camera</span>
-          <span className={styles.photoLabel} style={{ color: hasPhoto ? 'var(--navy)' : undefined, fontWeight: hasPhoto ? 500 : undefined }}>
-            {hasPhoto
-              ? t('addRecipe.photoAdded')
-              : <>{t('addRecipe.photo')} <span className={styles.optionalBadge}>{t('addRecipe.optional')}</span></>
-            }
-          </span>
+          {photo ? (
+            <img src={photo} className={styles.photoThumb} alt="Zdjęcie przepisu" />
+          ) : (
+            <>
+              <span className="material-symbols-outlined" style={{ fontSize: 26, color: 'var(--text-muted)' }}>photo_camera</span>
+              <div className={styles.photoLabelWrap}>
+                <span className={styles.photoLabel}>{t('addRecipe.photo')}</span>
+                <span className={styles.optionalBadge}>{t('addRecipe.optional')}</span>
+              </div>
+            </>
+          )}
         </div>
 
         {/* ── Dish name ── */}
@@ -129,13 +193,13 @@ export default function AddRecipe() {
 
         {/* ── Category ── */}
         <div className={styles.section}>
-          <div className={styles.sectionLabel}>{t('addRecipe.category')}</div>
+          <div className={styles.sectionLabel}>{t('addRecipe.category')} <span className={styles.requiredDot} /></div>
           <div className={styles.categoryChips}>
             {RECIPE_CATEGORIES.map(cat => (
               <button
                 key={cat.id}
                 className={`${styles.catChip} ${category === cat.id ? styles.catChipActive : ''}`}
-                onClick={() => setCategory(c => c === cat.id ? '' : cat.id)}
+                onClick={() => setCategory(cat.id)}
               >
                 {cat.icon && <span className={styles.catChipIcon}>{cat.icon}</span>}
                 {cat.label}
@@ -288,6 +352,34 @@ export default function AddRecipe() {
           </button>
         </div>
       </div>
+
+      {/* ── Crop overlay ── */}
+      {rawPhoto && (
+        <div className={styles.cropOverlay}>
+          <div className={styles.cropHeader}>
+            <button className={styles.cropCancelBtn} onClick={handleCropCancel}>Anuluj</button>
+            <span className={styles.cropTitle}>Przytnij zdjęcie</span>
+            <button className={styles.cropConfirmBtn} onClick={handleCropConfirm}>Gotowe</button>
+          </div>
+          <div className={styles.cropArea}>
+            <Cropper
+              image={rawPhoto}
+              crop={crop}
+              zoom={zoom}
+              aspect={4 / 3}
+              onCropChange={setCrop}
+              onZoomChange={setZoom}
+              onCropComplete={onCropComplete}
+              showGrid={false}
+            />
+          </div>
+          <div className={styles.cropHint}>
+            <span className="material-symbols-outlined" style={{ fontSize: 16 }}>pinch</span>
+            Szczypnij, aby powiększyć · Przeciągnij, aby ustawić
+          </div>
+        </div>
+      )}
+
       <BottomNav />
     </div>
   );
