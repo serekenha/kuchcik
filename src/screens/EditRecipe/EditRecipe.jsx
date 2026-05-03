@@ -198,7 +198,7 @@ export default function EditRecipe() {
 
   function extractYoutubeId(url) {
     if (!url) return null;
-    const match = url.match(/(?:v=|youtu\.be\/)([^&?/]+)/);
+    const match = url.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
     return match ? match[1] : null;
   }
 

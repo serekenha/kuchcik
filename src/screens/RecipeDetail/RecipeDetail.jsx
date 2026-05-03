@@ -224,13 +224,6 @@ export default function RecipeDetail() {
                     <span className="material-symbols-outlined" style={{ fontSize: 52, color: 'var(--text-muted)' }}>play_circle</span>
                     <p className={styles.videoPlaceholderTitle}>{t('detail.noVideo')}</p>
                     <p className={styles.videoPlaceholderDesc}>{t('detail.noVideoDesc')}</p>
-                    <button
-                      className={styles.videoEditBtn}
-                      onClick={() => navigate(`/recipe/${id}/edit`)}
-                    >
-                      <span className="material-symbols-outlined" style={{ fontSize: 16 }}>edit</span>
-                      Dodaj w edycji przepisu
-                    </button>
                   </div>
                 )}
               </div>
