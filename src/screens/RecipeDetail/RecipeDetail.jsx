@@ -32,7 +32,9 @@ export default function RecipeDetail() {
     contentRef.current?.scrollTo(0, 0);
   }, []);
   const [youtubeInput, setYoutubeInput] = useState('');
-  const [youtubeEmbedUrl, setYoutubeEmbedUrl] = useState('');
+  const [youtubeEmbedUrl, setYoutubeEmbedUrl] = useState(
+    recipe?.youtubeId ? `https://www.youtube.com/embed/${recipe.youtubeId}` : ''
+  );
   const [completedSteps, setCompletedSteps] = useState({});
 
   if (!recipe) {

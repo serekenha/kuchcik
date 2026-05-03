@@ -133,7 +133,10 @@ export default function RecipeList() {
         {featured && (
           <div className={styles.featuredCard} onClick={() => navigate(`/recipe/${featured.id}`)}>
             <div className={styles.featuredImg}>
-              <span className="material-symbols-outlined" style={{ fontSize: 40, color: '#C0C7D0' }}>photo_camera</span>
+              {featured.photo
+                ? <img src={featured.photo} alt={getRecipeName(featured, language)} className={styles.featuredImgPhoto} />
+                : <span className="material-symbols-outlined" style={{ fontSize: 40, color: '#C0C7D0' }}>photo_camera</span>
+              }
             </div>
             <div className={styles.featuredBody}>
               <h3 className={styles.featuredName}>{getRecipeName(featured, language)}</h3>

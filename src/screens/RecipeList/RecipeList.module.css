@@ -226,6 +226,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+.featuredImgPhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .featuredBody {
@@ -233,8 +240,8 @@
 }
 
 .featuredName {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 16px;
+  font-weight: 600;
   color: var(--navy);
   line-height: 1.3;
   margin: 0 0 10px;

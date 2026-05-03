@@ -1,5 +1,23 @@
-import { createContext, useContext, useState, useRef, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import { sampleRecipes } from '../data/sampleRecipes';
+
+function loadRecipes() {
+  try {
+    const stored = localStorage.getItem('dishie_recipes');
+    return stored ? JSON.parse(stored) : sampleRecipes;
+  } catch {
+    return sampleRecipes;
+  }
+}
+
+function loadShoppingList() {
+  try {
+    const stored = localStorage.getItem('dishie_shopping');
+    return stored ? JSON.parse(stored) : [];
+  } catch {
+    return [];
+  }
+}
 
 const AppContext = createContext(null);
 
@@ -15,13 +33,21 @@ function loadSettings() {
 }
 
 export function AppProvider({ children }) {
-  const [recipes, setRecipes] = useState(sampleRecipes);
-  const [shoppingList, setShoppingList] = useState([]);
+  const [recipes, setRecipes] = useState(loadRecipes);
+  const [shoppingList, setShoppingList] = useState(loadShoppingList);
   const [toastMsg, setToastMsg] = useState(null);
   const [navDirection, setNavDirection] = useState('forward');
   const [settings, setSettings] = useState(loadSettings);
   const toastTimer = useRef(null);
   const navGuardRef = useRef(null); // fn(path) => void — set by screens with unsaved changes
+
+  useEffect(() => {
+    localStorage.setItem('dishie_recipes', JSON.stringify(recipes));
+  }, [recipes]);
+
+  useEffect(() => {
+    localStorage.setItem('dishie_shopping', JSON.stringify(shoppingList));
+  }, [shoppingList]);
 
   const showToast = useCallback((msg) => {
     setToastMsg(msg);
