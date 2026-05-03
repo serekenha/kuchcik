@@ -54,6 +54,14 @@ export default function AddRecipe() {
   const [focusIngredient, setFocusIngredient] = useState(false);
   const [focusStep, setFocusStep] = useState(false);
 
+  const [ingredients, setIngredients] = useState([
+    { id: 1, name: '', qty: '' },
+  ]);
+  const [showSteps, setShowSteps] = useState(false);
+  const [steps, setSteps] = useState([{ id: 1, text: '' }]);
+  const [showYoutube, setShowYoutube] = useState(false);
+  const [youtubeUrl, setYoutubeUrl] = useState('');
+
   useEffect(() => {
     if (focusIngredient) {
       lastIngredientRef.current?.focus();
@@ -67,14 +75,6 @@ export default function AddRecipe() {
       setFocusStep(false);
     }
   }, [steps, focusStep]);
-
-  const [ingredients, setIngredients] = useState([
-    { id: 1, name: '', qty: '' },
-  ]);
-  const [showSteps, setShowSteps] = useState(false);
-  const [steps, setSteps] = useState([{ id: 1, text: '' }]);
-  const [showYoutube, setShowYoutube] = useState(false);
-  const [youtubeUrl, setYoutubeUrl] = useState('');
 
   const pricePerPortion = (() => {
     const tp = parseFloat(totalPrice);
