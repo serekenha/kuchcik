@@ -49,9 +49,15 @@ function AnimatedRoutes() {
 
 export default function App() {
   const { toastMsg, settings } = useApp();
+  const isDark = settings?.theme === 'dark';
+
+  useEffect(() => {
+    const color = isDark ? '#1A1D27' : '#ffffff';
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', color);
+  }, [isDark]);
 
   return (
-    <div className={`app-frame${settings?.theme === 'dark' ? ' dark' : ''}`}>
+    <div className={`app-frame${isDark ? ' dark' : ''}`}>
       <div className="screen-content">
         <AnimatedRoutes />
         <Toast message={toastMsg} />
