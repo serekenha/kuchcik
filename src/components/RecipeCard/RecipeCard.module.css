@@ -3,6 +3,7 @@
   flex-direction: column;
   background: var(--white);
   border-radius: 20px;
+  border: 1.5px solid var(--border);
   overflow: hidden;
   cursor: pointer;
   animation: cardIn 360ms ease-out both;

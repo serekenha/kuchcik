@@ -196,16 +196,16 @@
 /* ── See all button ─────────────────────────────────────── */
 .seeAllBtn {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   font-family: inherit;
-  color: var(--text-muted);
+  color: var(--navy);
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
-  transition: color 150ms ease;
+  transition: opacity 150ms ease;
 }
-.seeAllBtn:hover { color: var(--navy); }
+.seeAllBtn:hover { opacity: 0.7; }
 
 /* ── Featured card ──────────────────────────────────────── */
 .featuredCard {
