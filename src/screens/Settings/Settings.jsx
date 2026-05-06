@@ -5,6 +5,7 @@ import BottomNav from '../../components/BottomNav/BottomNav';
 import { useApp } from '../../context/AppContext';
 import { useTranslation } from '../../i18n/useTranslation';
 import styles from './Settings.module.css';
+import { FlagPL, FlagGB } from '../../components/Flags/Flags';
 
 export default function Settings() {
   const { settings, updateSettings, showToast, navGuardRef } = useApp();
@@ -114,31 +115,21 @@ export default function Settings() {
         {/* ── Language ── */}
         <div className={styles.section}>
           <div className={styles.label}>{t('settings.language')}</div>
-          <div className={styles.radioGroup}>
-            <label className={styles.radioLabel}>
-              <input
-                type="radio"
-                name="language"
-                value="pl"
-                checked={language === 'pl'}
-                onChange={() => setLanguage('pl')}
-                className={styles.radioInput}
-              />
-              <span className={styles.radioCustom} />
+          <div className={styles.toggleRow}>
+            <button
+              className={`${styles.toggleBtn} ${language === 'pl' ? styles.toggleActive : ''}`}
+              onClick={() => setLanguage('pl')}
+            >
+              <FlagPL size={22} />
               Polski
-            </label>
-            <label className={styles.radioLabel}>
-              <input
-                type="radio"
-                name="language"
-                value="en"
-                checked={language === 'en'}
-                onChange={() => setLanguage('en')}
-                className={styles.radioInput}
-              />
-              <span className={styles.radioCustom} />
+            </button>
+            <button
+              className={`${styles.toggleBtn} ${language === 'en' ? styles.toggleActive : ''}`}
+              onClick={() => setLanguage('en')}
+            >
+              <FlagGB size={22} />
               English
-            </label>
+            </button>
           </div>
         </div>
 

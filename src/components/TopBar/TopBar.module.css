@@ -1,6 +1,6 @@
 .topbar {
   height: 64px;
-  background: var(--white);
+  background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -83,7 +83,7 @@
   border-radius: 14px;
   border: 1.5px solid var(--border);
   color: var(--navy);
-  background: none;
+  background: var(--white);
   flex-shrink: 0;
   cursor: pointer;
   transition: background 150ms ease, border-color 150ms ease;

@@ -59,6 +59,9 @@ export default function AddRecipe() {
   const [ingredients, setIngredients] = useState([
     { id: 1, name: '', qty: '' },
   ]);
+  const [showCategory, setShowCategory] = useState(true);
+  const [showCost, setShowCost] = useState(true);
+  const [showIngredients, setShowIngredients] = useState(true);
   const [showSteps, setShowSteps] = useState(false);
   const [steps, setSteps] = useState([{ id: 1, text: '' }]);
   const [showYoutube, setShowYoutube] = useState(false);
@@ -221,7 +224,7 @@ export default function AddRecipe() {
           <button
             onClick={() => setShowImportModal(true)}
             aria-label="Importuj przepis"
-            style={{ display:'flex', alignItems:'center', justifyContent:'center', width:36, height:36, flexShrink:0, background:'none', border:'1.5px solid var(--border)', borderRadius:14, cursor:'pointer', color:'var(--navy)' }}
+            style={{ display:'flex', alignItems:'center', justifyContent:'center', width:36, height:36, flexShrink:0, background:'var(--white)', border:'1.5px solid var(--border)', borderRadius:14, cursor:'pointer', color:'var(--navy)' }}
           >
             <span className="material-symbols-outlined" style={{ fontSize: 20 }}>content_paste</span>
           </button>
@@ -274,7 +277,7 @@ export default function AddRecipe() {
 
         {/* ── Dish name ── */}
         <div className={styles.section}>
-          <div className={styles.sectionLabel}>{t('addRecipe.name')} <span className={styles.requiredDot} /></div>
+          <div className={styles.sectionLabel}>{t('addRecipe.name')}</div>
           <input
             className={styles.input}
             type="text"
@@ -286,93 +289,123 @@ export default function AddRecipe() {
 
         {/* ── Category ── */}
         <div className={styles.section}>
-          <div className={styles.sectionLabel}>{t('addRecipe.category')} <span className={styles.requiredDot} /></div>
-          <div className={styles.categoryChips}>
-            {RECIPE_CATEGORIES.map(cat => (
-              <button
-                key={cat.id}
-                className={`${styles.catChip} ${category === cat.id ? styles.catChipActive : ''}`}
-                onClick={() => setCategory(cat.id)}
-              >
-                {cat.icon && <span className={styles.catChipIcon}>{cat.icon}</span>}
-                {cat.label}
-              </button>
-            ))}
+          <div className={styles.optToggle} onClick={() => setShowCategory(s => !s)}>
+            <div className={styles.optToggleLabel}>
+              <span className="material-symbols-outlined" style={{ fontSize: 16, color: 'var(--text-muted)' }}>label</span>
+              {t('addRecipe.category')}
+            </div>
+            <ChevronIcon open={showCategory} />
           </div>
+          {showCategory && (
+            <div className={styles.collapseContent}>
+              <div className={styles.categoryChips}>
+                {RECIPE_CATEGORIES.map(cat => (
+                  <button
+                    key={cat.id}
+                    className={`${styles.catChip} ${category === cat.id ? styles.catChipActive : ''}`}
+                    onClick={() => setCategory(cat.id)}
+                  >
+                    {cat.icon && <span className={styles.catChipIcon}>{cat.icon}</span>}
+                    {cat.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* ── Cost & portions ── */}
         <div className={styles.section}>
-          <div className={styles.sectionLabel}>{t('addRecipe.costPortions')} <span className={styles.requiredDot} /></div>
-          <div className={styles.costRow}>
-            <div className={styles.costField}>
-              <div className={styles.fieldLabel}>{t('addRecipe.totalPrice')}</div>
-              <input
-                className={`${styles.input} ${styles.inputCenter}`}
-                type="number"
-                inputMode="decimal"
-                placeholder="0,00"
-                value={totalPrice}
-                onChange={e => setTotalPrice(e.target.value)}
-              />
+          <div className={styles.optToggle} onClick={() => setShowCost(s => !s)}>
+            <div className={styles.optToggleLabel}>
+              <span className="material-symbols-outlined" style={{ fontSize: 16, color: 'var(--text-muted)' }}>payments</span>
+              {t('addRecipe.costPortions')}
             </div>
-            <div className={styles.costField}>
-              <div className={styles.fieldLabel}>{t('addRecipe.portions')}</div>
-              <input
-                className={`${styles.input} ${styles.inputCenter}`}
-                type="number"
-                inputMode="numeric"
-                placeholder="0"
-                value={portions}
-                onChange={e => setPortions(e.target.value)}
-              />
-            </div>
+            <ChevronIcon open={showCost} />
           </div>
-          <div className={styles.calcPill}>
-            <span className="material-symbols-outlined" style={{ fontSize: 16, color: 'rgba(25,31,53,0.45)', flexShrink: 0 }}>calculate</span>
-            <div>
-              <div className={styles.calcLabel}>{t('addRecipe.pricePerPortion')}</div>
-              <div className={styles.calcValue}>{pricePerPortion ? `${pricePerPortion} zł` : '—'}</div>
+          {showCost && (
+            <div className={styles.collapseContent}>
+              <div className={styles.costRow}>
+                <div className={styles.costField}>
+                  <div className={styles.fieldLabel}>{t('addRecipe.totalPrice')}</div>
+                  <input
+                    className={`${styles.input} ${styles.inputCenter}`}
+                    type="number"
+                    inputMode="decimal"
+                    placeholder="0,00"
+                    value={totalPrice}
+                    onChange={e => setTotalPrice(e.target.value)}
+                  />
+                </div>
+                <div className={styles.costField}>
+                  <div className={styles.fieldLabel}>{t('addRecipe.portions')}</div>
+                  <input
+                    className={`${styles.input} ${styles.inputCenter}`}
+                    type="number"
+                    inputMode="numeric"
+                    placeholder="0"
+                    value={portions}
+                    onChange={e => setPortions(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className={styles.calcPill}>
+                <span className="material-symbols-outlined" style={{ fontSize: 16, color: 'rgba(25,31,53,0.45)', flexShrink: 0 }}>calculate</span>
+                <div>
+                  <div className={styles.calcLabel}>{t('addRecipe.pricePerPortion')}</div>
+                  <div className={styles.calcValue}>{pricePerPortion ? `${pricePerPortion} zł` : '—'}</div>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* ── Ingredients ── */}
         <div className={styles.section}>
-          <div className={styles.sectionLabel}>{t('addRecipe.ingredients')} <span className={styles.requiredDot} /></div>
-          <div className={styles.ingHeader}>
-            <span className={styles.ingColLabel} style={{ flex: 2 }}>{t('addRecipe.ingredientCol')}</span>
-            <span className={styles.ingColLabel} style={{ flex: 1 }}>{t('addRecipe.qtyCol')}</span>
-            <span style={{ width: 38 }} />
+          <div className={styles.optToggle} onClick={() => setShowIngredients(s => !s)}>
+            <div className={styles.optToggleLabel}>
+              <span className="material-symbols-outlined" style={{ fontSize: 16, color: 'var(--text-muted)' }}>grocery</span>
+              {t('addRecipe.ingredients')}
+            </div>
+            <ChevronIcon open={showIngredients} />
           </div>
-          {ingredients.map((ing, i) => (
-            <div key={ing.id} className={styles.ingRow}>
-              <input
-                ref={i === ingredients.length - 1 ? lastIngredientRef : null}
-                className={`${styles.input} ${styles.ingName}`}
-                type="text"
-                placeholder="np. Makaron"
-                value={ing.name}
-                onChange={e => updateIngredient(ing.id, 'name', e.target.value)}
-              />
-              <input
-                className={`${styles.input} ${styles.ingQty}`}
-                type="text"
-                placeholder="400 g"
-                value={ing.qty}
-                onChange={e => updateIngredient(ing.id, 'qty', e.target.value)}
-              />
-              <button className={styles.delBtn} onClick={() => removeIngredient(ing.id)}>
-                <span className="material-symbols-outlined" style={{ fontSize: 16 }}>remove</span>
+          {showIngredients && (
+            <div className={styles.collapseContent}>
+              <div className={styles.ingHeader}>
+                <span className={styles.ingColLabel} style={{ flex: 2 }}>{t('addRecipe.ingredientCol')}</span>
+                <span className={styles.ingColLabel} style={{ flex: 1 }}>{t('addRecipe.qtyCol')}</span>
+                <span style={{ width: 38 }} />
+              </div>
+              {ingredients.map((ing, i) => (
+                <div key={ing.id} className={styles.ingRow}>
+                  <input
+                    ref={i === ingredients.length - 1 ? lastIngredientRef : null}
+                    className={`${styles.input} ${styles.ingName}`}
+                    type="text"
+                    placeholder="np. Makaron"
+                    value={ing.name}
+                    onChange={e => updateIngredient(ing.id, 'name', e.target.value)}
+                  />
+                  <input
+                    className={`${styles.input} ${styles.ingQty}`}
+                    type="text"
+                    placeholder="400 g"
+                    value={ing.qty}
+                    onChange={e => updateIngredient(ing.id, 'qty', e.target.value)}
+                  />
+                  <button className={styles.delBtn} onClick={() => removeIngredient(ing.id)}>
+                    <span className="material-symbols-outlined" style={{ fontSize: 16 }}>remove</span>
+                  </button>
+                </div>
+              ))}
+              <button className={styles.addRowBtn} onClick={addIngredient}>
+                <span className={styles.addRowIcon}>
+                  <span className="material-symbols-outlined" style={{ fontSize: 14 }}>add</span>
+                </span>
+                {t('addRecipe.addIngredient')}
               </button>
             </div>
-          ))}
-          <button className={styles.addRowBtn} onClick={addIngredient}>
-            <span className={styles.addRowIcon}>
-              <span className="material-symbols-outlined" style={{ fontSize: 14 }}>add</span>
-            </span>
-            {t('addRecipe.addIngredient')}
-          </button>
+          )}
         </div>
 
         {/* ── Recipe steps (optional) ── */}

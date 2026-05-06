@@ -3,21 +3,18 @@
   flex-direction: column;
   background: var(--white);
   border-radius: 20px;
-  box-shadow: var(--card-shadow);
   overflow: hidden;
   cursor: pointer;
   animation: cardIn 360ms ease-out both;
-  transition: transform 150ms ease, box-shadow 150ms ease;
+  transition: transform 150ms ease;
 }
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: var(--card-shadow-hover);
 }
 
 .card:active {
   transform: scale(0.98);
-  box-shadow: var(--card-shadow);
 }
 
 @keyframes cardIn {

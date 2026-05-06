@@ -94,7 +94,7 @@ export default function RecipeDetail() {
   const iconBtnStyle = {
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     width: 36, height: 36, flexShrink: 0,
-    background: 'none', border: '1.5px solid var(--border)',
+    background: 'var(--white)', border: '1.5px solid var(--border)',
     borderRadius: 14, cursor: 'pointer', color: 'var(--navy)',
     transition: 'background 150ms ease, border-color 150ms ease',
   };
@@ -127,14 +127,14 @@ export default function RecipeDetail() {
                     onClick={() => { setShowMenu(false); setShowDeleteModal(true); }}
                   >
                     <span className="material-symbols-outlined" style={{ fontSize: 18, color: '#DC2626' }}>delete</span>
-                    <span style={{ color: '#DC2626' }}>Usuń przepis</span>
+                    <span style={{ color: '#DC2626' }}>Usuń</span>
                   </button>
                   <button
                     className={styles.dropdownItem}
                     onClick={() => { setShowMenu(false); setShowShareModal(true); }}
                   >
                     <span className="material-symbols-outlined" style={{ fontSize: 18 }}>content_copy</span>
-                    <span>Udostępnij kod</span>
+                    <span>Udostępnij</span>
                   </button>
                 </div>
               )}
@@ -235,17 +235,20 @@ export default function RecipeDetail() {
                 {recipe.steps && recipe.steps.length > 0 ? (
                   recipe.steps.map((step, i) => (
                     <div key={i} className={styles.stepRow} onClick={() => toggleStep(i)}>
-                      <div className={`${styles.stepNum} ${completedSteps[i] ? styles.stepNumDone : ''}`}>
-                        {completedSteps[i]
-                          ? <span className="material-symbols-outlined" style={{ fontSize: 14, color: 'var(--navy)' }}>check</span>
-                          : <span>{i + 1}</span>
-                        }
+                      <div className={styles.stepLeft}>
+                        <div className={`${styles.stepNum} ${completedSteps[i] ? styles.stepNumDone : ''}`}>
+                          {completedSteps[i]
+                            ? <span className="material-symbols-outlined" style={{ fontSize: 14, color: 'var(--navy)' }}>check</span>
+                            : <span>{i + 1}</span>
+                          }
+                        </div>
+                        {i < recipe.steps.length - 1 && <div className={styles.stepLine} />}
                       </div>
                       <p className={`${styles.stepText} ${completedSteps[i] ? styles.stepTextDone : ''}`}>{step}</p>
                     </div>
                   ))
                 ) : (
-                  <p className={styles.videoPlaceholderDesc} style={{ textAlign: 'center', padding: '32px 0' }}>
+                  <p className={styles.stepsEmpty}>
                     Brak kroków przepisu
                   </p>
                 )}
