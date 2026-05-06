@@ -11,6 +11,24 @@
   z-index: 10;
 }
 
+.topbar::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(to bottom, var(--bg), transparent);
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.topbarScrolled::after {
+  opacity: 1;
+}
+
 /* ── Home: logo ───────────────────────────────────────────── */
 .logo {
   height: 32px;
