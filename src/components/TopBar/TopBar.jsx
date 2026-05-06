@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../context/AppContext';
 import styles from './TopBar.module.css';
@@ -13,17 +13,6 @@ export default function TopBar({
   const navigate = useNavigate();
   const { setNavDirection } = useApp();
   const [theme, setTheme] = useState('light');
-  const [scrolled, setScrolled] = useState(false);
-  const barRef = useRef(null);
-
-  useEffect(() => {
-    // Watch the next sibling element (the scrollable content area)
-    const container = barRef.current?.nextElementSibling;
-    if (!container) return;
-    function onScroll() { setScrolled(container.scrollTop > 4); }
-    container.addEventListener('scroll', onScroll, { passive: true });
-    return () => container.removeEventListener('scroll', onScroll);
-  }, []);
 
   function handleBack() {
     if (onBack) { onBack(); return; }
@@ -31,12 +20,10 @@ export default function TopBar({
     navigate(-1);
   }
 
-  const barClass = `${styles.topbar} ${scrolled ? styles.topbarScrolled : ''}`;
-
   /* ── Home screen ────────────────────────────────────────── */
   if (isHome) {
     return (
-      <header ref={barRef} className={barClass}>
+      <header className={styles.topbar}>
         <img src="/dishie-logo-02.svg" alt="kuchcik" className={styles.logo} />
       </header>
     );
@@ -44,7 +31,7 @@ export default function TopBar({
 
   /* ── All other screens ──────────────────────────────────── */
   return (
-    <header ref={barRef} className={barClass}>
+    <header className={styles.topbar}>
       <div className={styles.left}>
         {showBack && (
           <button className={styles.backBtn} onClick={handleBack} aria-label="Wróć">
