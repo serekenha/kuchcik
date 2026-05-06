@@ -40,7 +40,9 @@ export default function RecipeCard({ recipe, animIndex = 0 }) {
       <div className={styles.photo}>
         {recipe.photo
           ? <img src={recipe.photo} alt={displayName} className={styles.photoImg} />
-          : <span className="material-symbols-outlined" style={{ fontSize: 40, color: '#C0C7D0' }}>photo_camera</span>
+          : <div className={styles.photoPlaceholder}>
+              <span className="material-symbols-outlined" style={{ fontSize: 40, color: '#C0C7D0' }}>photo_camera</span>
+            </div>
         }
       </div>
 

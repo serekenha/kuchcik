@@ -135,7 +135,9 @@ export default function RecipeList() {
             <div className={styles.featuredImg}>
               {featured.photo
                 ? <img src={featured.photo} alt={getRecipeName(featured, language)} className={styles.featuredImgPhoto} />
-                : <span className="material-symbols-outlined" style={{ fontSize: 40, color: '#C0C7D0' }}>photo_camera</span>
+                : <div className={styles.featuredImgPlaceholder}>
+                    <span className="material-symbols-outlined" style={{ fontSize: 40, color: '#C0C7D0' }}>photo_camera</span>
+                  </div>
               }
             </div>
             <div className={styles.featuredBody}>
