@@ -180,7 +180,7 @@ export default function RecipeList() {
                   navigate('/przepisy', { state: { category: cat.id } });
                 }}
               >
-                <CategoryIcon category={cat.id} size={32} />
+                <CategoryIcon category={cat.id} size={24} />
                 <span className={styles.categoryLabel}>{t('cat.' + cat.id)}</span>
               </button>
             ))}
