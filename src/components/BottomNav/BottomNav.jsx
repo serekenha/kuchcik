@@ -3,11 +3,10 @@ import { useApp } from '../../context/AppContext';
 import styles from './BottomNav.module.css';
 
 const NAV_ITEMS = [
-  { id: 'home',        path: '/',           label: 'Strona główna', icon: 'home' },
-  { id: 'recipes',    path: '/przepisy',    label: 'Przepisy',      icon: 'menu_book' },
-  { id: 'shopping',   path: '/zakupy',      label: 'Zakupy',        icon: 'shopping_cart' },
-  { id: 'dictionary', path: '/slownik',     label: 'Słownik',       icon: 'book_6' },
-  { id: 'settings',   path: '/ustawienia',  label: 'Ustawienia',    icon: 'settings' },
+  { id: 'home',       path: '/',            label: 'Strona główna', icon: 'home' },
+  { id: 'recipes',   path: '/przepisy',     label: 'Przepisy',      icon: 'menu_book' },
+  { id: 'shopping',  path: '/zakupy',       label: 'Zakupy',        icon: 'shopping_cart' },
+  { id: 'settings',  path: '/ustawienia',   label: 'Ustawienia',    icon: 'settings' },
 ];
 
 function getActiveId(pathname) {
@@ -16,7 +15,6 @@ function getActiveId(pathname) {
   if (pathname === '/przepisy') return 'recipes';
   if (pathname === '/dodaj') return 'recipes';
   if (pathname === '/zakupy') return 'shopping';
-  if (pathname === '/slownik') return 'dictionary';
   if (pathname === '/ustawienia') return 'settings';
   return null;
 }
